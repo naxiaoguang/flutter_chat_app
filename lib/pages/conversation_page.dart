@@ -79,7 +79,13 @@ class _ConversationPageState extends State<ConversationPage> {
                   children: <Widget>[
                     Expanded(
                       child: TextFormField(
+                        cursorColor: Colors.white70,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                         decoration: InputDecoration(
+                          hintText: 'Type something here..',
+                          hintStyle: TextStyle(color: Colors.white70),
                           contentPadding: EdgeInsets.only(
                               left: 20, top: 20, bottom: 20, right: 20),
                           filled: true,
@@ -94,7 +100,10 @@ class _ConversationPageState extends State<ConversationPage> {
                                   width: 48,
                                   height: 32,
                                   child: Center(
-                                    child: Icon(Icons.send),
+                                    child: Icon(
+                                      Icons.send,
+                                      color: Colors.white70,
+                                    ),
                                   ),
                                 ),
                                 onTap: () {},
