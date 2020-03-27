@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class ChatBox extends StatelessWidget {
   final AlignPos align;
   final String message;
+  final String time;
 
-  const ChatBox({Key key, this.align = AlignPos.LEFT, this.message})
+  const ChatBox({Key key, this.align = AlignPos.LEFT, this.message, this.time})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class ChatBox extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        '10.04 AM',
+                        '$time',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white70,
@@ -71,7 +72,7 @@ class ChatBox extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        'now',
+                        '$time',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white70,

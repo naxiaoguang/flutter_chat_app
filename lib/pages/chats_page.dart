@@ -1,4 +1,5 @@
 import 'package:chat_app/widgets/chat_item.dart';
+import 'package:chat_app/widgets/custom_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class ChatsPage extends StatefulWidget {
@@ -7,6 +8,7 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +53,20 @@ class _ChatsPageState extends State<ChatsPage> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavigation(
+        currentIndex: currentIndex,
+        onTap: (int index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        items: [
+          CustomBottomNavItem(icon: Icons.home),
+          CustomBottomNavItem(icon: Icons.camera_alt),
+          CustomBottomNavItem(icon: Icons.chat),
+          CustomBottomNavItem(icon: Icons.person),
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -110,7 +126,7 @@ class _ChatsPageState extends State<ChatsPage> {
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSSAbhj4m_d_j0jLRgbJkWdGDFfQnUxRUDjU0Ht8kB-oZfhEV9H',
                     isOnline: true,
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 24,
                   ),
                   ChatItem(
@@ -137,7 +153,7 @@ class _ChatsPageState extends State<ChatsPage> {
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSSAbhj4m_d_j0jLRgbJkWdGDFfQnUxRUDjU0Ht8kB-oZfhEV9H',
                     isOnline: true,
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 24,
                   ),
                   ChatItem(

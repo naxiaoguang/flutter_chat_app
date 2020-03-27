@@ -7,36 +7,38 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
+  TextEditingController _textEditingController = TextEditingController();
   List<dynamic> messages = [
     {
       "id": 0,
       "sender": 1, // 1 me - 2 other
       "message": "Hello world!",
-      "time": ""
+      "time": "2 days"
     },
     {
       "id": 0,
       "sender": 0, // 1 me - 2 other
       "message": "lorem ipsum dolor sit amet",
-      "time": ""
+      "time": "10.40 AM"
     },
     {
       "id": 0,
       "sender": 0, // 1 me - 2 other
       "message": "adispicing",
-      "time": ""
+      "time": "10.41 AM"
     },
     {
       "id": 0,
       "sender": 1, // 1 me - 2 other
-      "message": "lorem ipsum lorem ipsum lorem lorem ipsum a sd as da sd as da sd as dsa asd",
-      "time": ""
+      "message":
+          "lorem ipsum lorem ipsum lorem lorem ipsum a sd as da sd as da sd as dsa asd",
+      "time": "11.24 AM"
     },
     {
       "id": 0,
       "sender": 0, // 1 me - 2 other
       "message": "consectetur sit velit",
-      "time": ""
+      "time": "11.27 AM"
     }
   ];
 
@@ -109,6 +111,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     return ChatBox(
                       align: f['sender'] == 0 ? AlignPos.LEFT : AlignPos.RIGHT,
                       message: f['message'],
+                      time: '${f['time']}',
                     );
                   }).toList(),
                 ),
@@ -125,6 +128,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     Expanded(
                       child: TextFormField(
                         cursorColor: Colors.white70,
+                        controller: _textEditingController,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -151,7 +155,18 @@ class _ConversationPageState extends State<ConversationPage> {
                                     ),
                                   ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  setState(() {
+                                    messages.add({
+                                      "id": 0,
+                                      "sender": 1, // 1 me - 2 other
+                                      "message":
+                                          "${_textEditingController.text}",
+                                      "time": ""
+                                    });
+                                  });
+                                  _textEditingController.clear();
+                                },
                               ),
                             ),
                           ),
