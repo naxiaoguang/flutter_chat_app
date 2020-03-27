@@ -1,3 +1,4 @@
+import 'package:chat_app/widgets/chat_box.dart';
 import 'package:flutter/material.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -6,6 +7,39 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
+  List<dynamic> messages = [
+    {
+      "id": 0,
+      "sender": 1, // 1 me - 2 other
+      "message": "Hello world!",
+      "time": ""
+    },
+    {
+      "id": 0,
+      "sender": 0, // 1 me - 2 other
+      "message": "lorem ipsum dolor sit amet",
+      "time": ""
+    },
+    {
+      "id": 0,
+      "sender": 0, // 1 me - 2 other
+      "message": "adispicing",
+      "time": ""
+    },
+    {
+      "id": 0,
+      "sender": 1, // 1 me - 2 other
+      "message": "lorem ipsum lorem ipsum lorem lorem ipsum a sd as da sd as da sd as dsa asd",
+      "time": ""
+    },
+    {
+      "id": 0,
+      "sender": 0, // 1 me - 2 other
+      "message": "consectetur sit velit",
+      "time": ""
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +65,9 @@ class _ConversationPageState extends State<ConversationPage> {
                       Icons.arrow_back_ios,
                       color: Colors.white70,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,220 +105,12 @@ class _ConversationPageState extends State<ConversationPage> {
               child: SingleChildScrollView(
                 reverse: true,
                 child: Column(
-                  children: <Widget>[
-                      Align(
-                      alignment: Alignment.centerRight,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(bottom: 8, top: 8),
-                            constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * .7),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Lorem ipsum dolor sit amet',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      'now',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomLeft: Radius.circular(12),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                   
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(bottom: 8, top: 8),
-                            constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * .7),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Lorem ipsum',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      '10.04 AM',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(64, 64, 64, 1),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(bottom: 8, top: 8),
-                            constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * .7),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Lorem ipsum dolor sit amet',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      '10.04 AM',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(64, 64, 64, 1),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(bottom: 8, top: 8),
-                            constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * .7),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Lorem ipsum dolor sit amet',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text(
-                                      'now',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomLeft: Radius.circular(12),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(bottom: 8, top: 8),
-                            constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * .7),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'adispicing sit elit',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      'now',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomLeft: Radius.circular(12),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                  children: messages.map((f) {
+                    return ChatBox(
+                      align: f['sender'] == 0 ? AlignPos.LEFT : AlignPos.RIGHT,
+                      message: f['message'],
+                    );
+                  }).toList(),
                 ),
               ),
             ),
