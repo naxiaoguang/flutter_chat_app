@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/conversation_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,12 @@ class ChatItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => ConversationPage(),
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
