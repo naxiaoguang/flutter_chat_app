@@ -67,10 +67,227 @@ class _ConversationPageState extends State<ConversationPage> {
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
+                reverse: true,
                 child: Column(
-                  children: <Widget>[],
+                  children: <Widget>[
+                      Align(
+                      alignment: Alignment.centerRight,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(bottom: 8, top: 8),
+                            constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth * .7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Lorem ipsum dolor sit amet',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      'now',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                   
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(bottom: 8, top: 8),
+                            constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth * .7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Lorem ipsum',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      '10.04 AM',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(64, 64, 64, 1),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(bottom: 8, top: 8),
+                            constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth * .7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Lorem ipsum dolor sit amet',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      '10.04 AM',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(64, 64, 64, 1),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(bottom: 8, top: 8),
+                            constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth * .7),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Lorem ipsum dolor sit amet',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      'now',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(bottom: 8, top: 8),
+                            constraints: BoxConstraints(
+                                maxWidth: constraints.maxWidth * .7),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'adispicing sit elit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      'now',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
+            ),
+            SizedBox(
+              height: 8,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
