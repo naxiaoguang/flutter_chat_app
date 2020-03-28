@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:chat_app/main.dart';
+import 'package:chat_app/pages/chats_page.dart';
+import 'package:chat_app/utils/storage_helper.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -6,6 +11,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    storageHelper.removeUUID();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +114,15 @@ class _LoginPageState extends State<LoginPage> {
               color: Color.fromRGBO(66, 66, 66, 1),
               borderRadius: BorderRadius.circular(32),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  storageHelper.setUUID = '${Random().nextInt(200)}';
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatsPage(),
+                    ),
+                  );
+                },
                 borderRadius: BorderRadius.circular(32),
                 child: Container(
                   height: 54,
