@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/chats_page.dart';
 import 'package:chat_app/utils/io_system.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,12 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatsPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
               },
             )
           ],

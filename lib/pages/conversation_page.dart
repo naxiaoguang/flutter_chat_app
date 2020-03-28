@@ -121,7 +121,7 @@ class _ConversationPageState extends State<ConversationPage> {
               height: 8,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
               child: Container(
                 child: Row(
                   children: <Widget>[
