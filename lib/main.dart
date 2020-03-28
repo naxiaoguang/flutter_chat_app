@@ -1,10 +1,12 @@
 import 'package:chat_app/pages/auth/splash_screen.dart';
-import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/utils/io_system.dart';
 import 'package:chat_app/utils/storage_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 StorageHelper storageHelper = StorageHelper();
+IOSystem ioSystem = IOSystem();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   storageHelper.prefs = await SharedPreferences.getInstance();

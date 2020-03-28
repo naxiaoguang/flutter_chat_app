@@ -1,20 +1,26 @@
-import 'dart:convert';
-import 'package:chat_app/models/io/io_user_model.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../main.dart';
 
 IO.Socket kSocket;
 PublishSubject messageStream = PublishSubject();
 PublishSubject activeUserStream = PublishSubject();
 
 class IOSystem {
-  static void connectSocket({String ip, String uuid}) async {
+  void init() {
+    print('SUID : ${storageHelper.getUUID()}');
+    if (kSocket == null) {
+      kSocket = IO.io('http://192.168.10.71:3000/', <String, dynamic>{
+        'transports': ['websocket', 'polling'],
+        'query': 'uuid='
+      });
+    }
+  }
+
+  void connectSocket({String ip, String uuid}) {
     kSocket?.disconnect();
-    print('ewrw');
-    kSocket = await IO.io('http://192.168.10.71:3000/', <String, dynamic>{
-      'transports': ['websocket', 'polling'],
-      'query': 'uuid=$uuid'
-    });
+    init();
     kSocket.connect();
     try {
       kSocket.on('connect', (data) {
@@ -34,12 +40,12 @@ class IOSystem {
     }
   }
 
-  static void sendMsg({String msg, String receiver}) {
+  void sendMsg({String msg, String receiver}) {
     kSocket.emit('send_msg',
         {"to": receiver, "message": msg, "onCreate": '${DateTime.now()}'});
   }
 
-  static void disconnectSocket() async {
+  void disconnectSocket() async {
     try {
       kSocket.disconnect();
       print('SOCKET DISCONNECTED');

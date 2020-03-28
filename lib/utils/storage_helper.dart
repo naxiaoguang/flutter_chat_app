@@ -9,7 +9,7 @@ class StorageHelper {
   }
 
   String getUUID() {
-    if(prefs == null) return null;
+    if (prefs == null) return null;
     String uuid = prefs.getString('uuid');
     return uuid;
   }
