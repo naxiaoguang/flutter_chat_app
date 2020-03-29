@@ -117,9 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(32),
                 child: InkWell(
                   onTap: () {
-                    storageHelper.setUUID = '${Random().nextInt(200)}';
+                    String uuid = '${Random().nextInt(9999999)}';
+                    storageHelper.setUUID = uuid;
 
-                    ioSystem.connectSocket();
+                    ioSystem.connectSocket(uuid: uuid);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

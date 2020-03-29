@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       } else {
-        ioSystem.connectSocket();
+        ioSystem.connectSocket(uuid: _uuid);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeNavigator()));
       }

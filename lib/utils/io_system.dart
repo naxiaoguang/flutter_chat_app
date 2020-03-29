@@ -1,31 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-import '../main.dart';
 
 IO.Socket kSocket;
 PublishSubject messageStream = PublishSubject();
 PublishSubject activeUserStream = PublishSubject();
 
 class IOSystem {
-  void init() {
-    print('SUID : ${storageHelper.getUUID()}');
+  void init({@required String uuid}) {
     if (kSocket == null) {
       kSocket = IO.io('http://192.168.10.71:3000/', <String, dynamic>{
         'transports': ['websocket', 'polling'],
-        'query': 'uuid='
+        'query': 'uuid=$uuid'
       });
     }
   }
 
-  void connectSocket({String ip, String uuid}) {
+  void connectSocket({@required String uuid}) {
     kSocket?.disconnect();
-    init();
+    init(uuid: uuid);
     kSocket.connect();
     try {
       kSocket.on('connect', (data) {
         print('qweqwe');
-        kSocket.emit('register', {"uuid": "$uuid", "uname": "Mobil"});
+        kSocket.emit('register', {"uuid": "$uuid"});
 
         kSocket.on('receive_msg', (data) {
           messageStream.add(data);

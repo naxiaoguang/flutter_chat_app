@@ -1,5 +1,4 @@
 import 'package:chat_app/widgets/chat_item.dart';
-import 'package:chat_app/widgets/custom_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class ChatsPage extends StatefulWidget {
