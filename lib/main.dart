@@ -1,16 +1,28 @@
 import 'package:chat_app/pages/auth/splash_screen.dart';
+import 'package:chat_app/register_providers.dart';
+import 'package:chat_app/utils/constants.dart';
 import 'package:chat_app/utils/io_system.dart';
 import 'package:chat_app/utils/storage_helper.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 StorageHelper storageHelper = StorageHelper();
 IOSystem ioSystem = IOSystem();
 
+Dio dio = Dio();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   storageHelper.prefs = await SharedPreferences.getInstance();
-  runApp(App());
+  dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    String token = storageHelper.getToken();
+    options.baseUrl = '$API';
+    options.headers['Authorization'] = 'Bearer $token';
+    print(options);
+    return options; //continue
+  }));
+
+  runApp(RegisterProviders());
 }
 
 class App extends StatefulWidget {
@@ -21,13 +33,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    messageStream.listen((res) {
-      print('msg stream: $res');
-    });
-    activeUserStream.listen((res) {
-      print('active user stream: $res');
-    });
-
     super.initState();
   }
 

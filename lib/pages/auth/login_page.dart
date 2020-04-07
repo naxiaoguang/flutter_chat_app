@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:chat_app/main.dart';
 import 'package:chat_app/pages/home/home_navigator.dart';
@@ -9,9 +10,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController _passwordCtrl = TextEditingController();
+  TextEditingController _mailCtrl = TextEditingController();
+
   @override
   void initState() {
     storageHelper.removeUUID();
+    ioSystem.disconnectSocket();
     super.initState();
   }
 
@@ -41,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Expanded(
                     child: TextFormField(
+                      controller: _mailCtrl,
                       cursorColor: Colors.white70,
                       style: TextStyle(
                         color: Colors.white,
@@ -48,8 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         hintText: 'Username',
                         hintStyle: TextStyle(color: Colors.white70),
-                        contentPadding: EdgeInsets.only(
-                            left: 20, top: 20, bottom: 20, right: 20),
+                        contentPadding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
                         filled: true,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 8),
@@ -79,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Expanded(
                     child: TextFormField(
+                      controller: _passwordCtrl,
                       cursorColor: Colors.white70,
                       style: TextStyle(
                         color: Colors.white,
@@ -86,8 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Colors.white70),
-                        contentPadding: EdgeInsets.only(
-                            left: 20, top: 20, bottom: 20, right: 20),
+                        contentPadding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
                         filled: true,
                         suffixIcon: Padding(
                             padding: const EdgeInsets.only(right: 8),
@@ -116,17 +121,18 @@ class _LoginPageState extends State<LoginPage> {
                 color: Color.fromRGBO(66, 66, 66, 1),
                 borderRadius: BorderRadius.circular(32),
                 child: InkWell(
-                  onTap: () {
-                    String uuid = '${Random().nextInt(9999999)}';
+                  onTap: () async {
+                    /* String uuid = '62dba345f9241ba';
                     storageHelper.setUUID = uuid;
 
-                    ioSystem.connectSocket(uuid: uuid);
+                    ioSystem.connectSocket();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => HomeNavigator(),
                       ),
-                    );
+                    ); */
+                    await doLogin();
                   },
                   borderRadius: BorderRadius.circular(32),
                   child: Container(
@@ -143,10 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Text(
                             'Login',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white70,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, color: Colors.white70, fontWeight: FontWeight.bold),
                           ),
                           Icon(Icons.arrow_forward_ios, color: Colors.white70)
                         ],
@@ -160,5 +163,29 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> doLogin() async {
+    try {
+      await dio.post('/auth/login', data: {"email": _mailCtrl.text, "password": _passwordCtrl.text}).then((res) async {
+        Map<String, dynamic> data = res.data is String ? jsonDecode(res.data) : res.data;
+        print(data);
+        if (data['status'] == 1) {
+          print('a');
+          await storageHelper.setToken(data['token']);
+          ioSystem.connectSocket();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeNavigator(),
+            ),
+          );
+        } else {
+          print('b');
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

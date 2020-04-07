@@ -6,8 +6,9 @@ class ChatItem extends StatelessWidget {
   final String fullName;
   final String profileImg;
   final bool isOnline;
+  final String room;
 
-  const ChatItem({Key key, this.fullName, this.isOnline, this.profileImg})
+  const ChatItem({Key key, this.fullName, this.isOnline, this.profileImg, @required this.room})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

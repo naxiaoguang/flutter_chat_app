@@ -1,3 +1,4 @@
+import 'package:chat_app/main.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/home/chats_page.dart';
 import 'package:chat_app/pages/home/home_page.dart';
@@ -39,10 +40,9 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                       Icons.menu,
                       color: Colors.white70,
                     ),
-                    onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => LoginPage()
-                      ));
+                    onPressed: () async {
+                      await storageHelper.clearAuthData();
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
                     },
                   ),
                   Text(

@@ -1,51 +1,48 @@
+import 'package:chat_app/main.dart';
+import 'package:chat_app/utils/storage_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/subjects.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 IO.Socket kSocket;
-PublishSubject messageStream = PublishSubject();
-PublishSubject activeUserStream = PublishSubject();
 
 class IOSystem {
-  void init({@required String uuid}) {
+  void init(String uuid) {
     if (kSocket == null) {
-      kSocket = IO.io('http://192.168.10.71:3000/', <String, dynamic>{
+      kSocket = IO.io('http://localhost:3000/', <String, dynamic>{
         'transports': ['websocket', 'polling'],
         'query': 'uuid=$uuid'
       });
     }
   }
 
-  void connectSocket({@required String uuid}) {
-    kSocket?.disconnect();
-    init(uuid: uuid);
-    kSocket.connect();
-    try {
-      kSocket.on('connect', (data) {
-        print('qweqwe');
-        kSocket.emit('register', {"uuid": "$uuid"});
+  void connectSocket() {
+    String uuid = storageHelper.getUUID();
+    if (uuid != null) {
+      kSocket?.disconnect();
+      init(uuid);
+      try {
+        kSocket.on('connect', (data) {
+          print('qweqwe');
+          kSocket.emit('register', {"uuid": uuid});
 
-        kSocket.on('receive_msg', (data) {
-          messageStream.add(data);
-        });
+          kSocket.on('receive_msg', (data) {});
 
-        kSocket.on('active_users', (data) {
-          activeUserStream.add(data);
+          kSocket.on('active_users', (data) {});
         });
-      });
-    } catch (e) {
-      print(e);
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
   void sendMsg({String msg, String receiver}) {
-    kSocket.emit('send_msg',
-        {"to": receiver, "message": msg, "onCreate": '${DateTime.now()}'});
+    kSocket.emit('send_msg', {"to": receiver, "message": msg, "onCreate": '${DateTime.now()}'});
   }
 
   void disconnectSocket() async {
     try {
       kSocket.disconnect();
+      kSocket = null;
       print('SOCKET DISCONNECTED');
     } catch (e) {
       print(e);
