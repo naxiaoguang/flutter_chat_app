@@ -8,8 +8,7 @@ class ChatItem extends StatelessWidget {
   final bool isOnline;
   final String room;
 
-  const ChatItem({Key key, this.fullName, this.isOnline, this.profileImg, @required this.room})
-      : super(key: key);
+  const ChatItem({Key key, this.fullName, this.isOnline, this.profileImg, @required this.room}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -20,7 +19,11 @@ class ChatItem extends StatelessWidget {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ConversationPage(),
+              builder: (context) => ConversationPage(
+                room: this.room,
+                title: this.fullName,
+                isOnline: this.isOnline,
+              ),
             ),
           );
         },
@@ -37,10 +40,12 @@ class ChatItem extends StatelessWidget {
                       padding: const EdgeInsets.all(1.0),
                       child: CircleAvatar(
                         radius: 24,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Image.network('$profileImg'),
-                        ),
+                        child: this.profileImg != null || this.profileImg != ''
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(24),
+                                child: Image.network('$profileImg'),
+                              )
+                            : Icon(Icons.person),
                         backgroundColor: Colors.amber,
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:chat_app/models/token_model.dart';
 import 'package:chat_app/pages/auth/splash_screen.dart';
 import 'package:chat_app/register_providers.dart';
 import 'package:chat_app/utils/constants.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 StorageHelper storageHelper = StorageHelper();
 IOSystem ioSystem = IOSystem();
+TokenModel userData;
 
 Dio dio = Dio();
 void main() async {

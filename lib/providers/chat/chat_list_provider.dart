@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:chat_app/models/chat/chat_list_model.dart';
 import 'package:flutter/material.dart';
-
-import '../main.dart';
+import '../../main.dart';
 
 class ChatListProvider with ChangeNotifier {
   bool _isLoading = true;
@@ -17,18 +15,37 @@ class ChatListProvider with ChangeNotifier {
   ChatListModel get res => _res;
 
   Future<void> getChatList() async {
-    _hasError = false;
-    _isLoading = true;
+    this.setError = false;
+    this.setLoading = true;
     try {
-      dio.post('/chat/list', data: {
+      await dio.post('/chat/list', data: {
         "offset": 0,
       }).then((res) {
         _res = ChatListModel.fromJson(res.data is String ? jsonDecode(res.data) : res.data);
+        notifyListeners();
       });
     } catch (e) {
-      _hasError = true;
-      _errorMsg = '$e';
+      this.setError = true;
+
+      this.setErrorMsg = '$e';
     }
-    _isLoading = false;
+    this.setLoading = false;
+  }
+
+  set setLoading(bool val) {
+    if (val == _isLoading) return;
+    _isLoading = val;
+    notifyListeners();
+  }
+
+  set setError(bool val) {
+    if (val == _hasError) return;
+    _hasError = val;
+    notifyListeners();
+  }
+
+  set setErrorMsg(String val) {
+    _errorMsg = val;
+    notifyListeners();
   }
 }

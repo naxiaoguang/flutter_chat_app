@@ -1,46 +1,38 @@
+import 'package:chat_app/main.dart';
+import 'package:chat_app/models/chat/conversation_model.dart';
+import 'package:chat_app/providers/chat/conversation_provider.dart';
+import 'package:chat_app/utils/functions.dart';
 import 'package:chat_app/widgets/chat_box.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ConversationPage extends StatefulWidget {
+  final String title;
+  final String room;
+  final bool isOnline;
+
+  const ConversationPage({Key key, @required this.title, @required this.room, this.isOnline}) : super(key: key);
   @override
   _ConversationPageState createState() => _ConversationPageState();
 }
 
 class _ConversationPageState extends State<ConversationPage> {
   TextEditingController _textEditingController = TextEditingController();
-  List<dynamic> messages = [
-    {
-      "id": 0,
-      "sender": 1, // 1 me - 2 other
-      "message": "Hello world!",
-      "time": "2 days"
-    },
-    {
-      "id": 0,
-      "sender": 0, // 1 me - 2 other
-      "message": "lorem ipsum dolor sit amet",
-      "time": "10.40 AM"
-    },
-    {
-      "id": 0,
-      "sender": 0, // 1 me - 2 other
-      "message": "adispicing",
-      "time": "10.41 AM"
-    },
-    {
-      "id": 0,
-      "sender": 1, // 1 me - 2 other
-      "message":
-          "lorem ipsum lorem ipsum lorem lorem ipsum a sd as da sd as da sd as dsa asd",
-      "time": "11.24 AM"
-    },
-    {
-      "id": 0,
-      "sender": 0, // 1 me - 2 other
-      "message": "consectetur sit velit",
-      "time": "11.27 AM"
-    }
-  ];
+  ConversationProvider _conversationProvider;
+  List<Items> _messages = [];
+  @override
+  void initState() {
+    Functions.nextTick(() async {
+      _conversationProvider = Provider.of<ConversationProvider>(context, listen: false);
+      await _conversationProvider.getChatDetail(widget.room);
+      _messages = _conversationProvider?.res?.items ?? [];
+      setState(() {
+        _messages = List.from(_messages.reversed);
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +68,12 @@ class _ConversationPageState extends State<ConversationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Jonathan',
+                        '${widget.title}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       Text(
-                        'Online',
+                        widget.isOnline ? 'Çevrimiçi' : 'Çevrimdışı',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white70, fontSize: 12),
                       ),
@@ -103,20 +95,32 @@ class _ConversationPageState extends State<ConversationPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                reverse: true,
-                child: Column(
-                  children: messages.map((f) {
-                    return ChatBox(
-                      align: f['sender'] == 0 ? AlignPos.LEFT : AlignPos.RIGHT,
-                      message: f['message'],
-                      time: '${f['time']}',
+            Expanded(child: Consumer<ConversationProvider>(builder: (context, provider, _) {
+              if (provider.hasError) {
+                return Text('hata...');
+              } else {
+                if (provider.isLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (provider?.res?.items != null && provider?.res?.items?.length != null && provider?.res?.items?.length != 0) {
+                    return SingleChildScrollView(
+                      reverse: true,
+                      child: Column(
+                        children: _messages.map((f) {
+                          return ChatBox(
+                            align: '${f.sender}' == '${userData.uuid}' ? AlignPos.RIGHT : AlignPos.LEFT,
+                            message: f.message,
+                            time: f.createdAt,
+                          );
+                        }).toList(),
+                      ),
                     );
-                  }).toList(),
-                ),
-              ),
-            ),
+                  } else {
+                    return Text('veri yok');
+                  }
+                }
+              }
+            })),
             SizedBox(
               height: 8,
             ),
@@ -135,8 +139,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         decoration: InputDecoration(
                           hintText: 'Type something here..',
                           hintStyle: TextStyle(color: Colors.white70),
-                          contentPadding: EdgeInsets.only(
-                              left: 20, top: 20, bottom: 20, right: 20),
+                          contentPadding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
                           filled: true,
                           suffixIcon: Padding(
                             padding: const EdgeInsets.only(right: 8),
@@ -157,14 +160,13 @@ class _ConversationPageState extends State<ConversationPage> {
                                 ),
                                 onTap: () {
                                   setState(() {
-                                    messages.add({
-                                      "id": 0,
-                                      "sender": 1, // 1 me - 2 other
-                                      "message":
-                                          "${_textEditingController.text}",
-                                      "time": ""
-                                    });
+                                    _messages.add(Items(
+                                      createdAt: '${DateTime.now()}',
+                                      message: '${_textEditingController.text}',
+                                      sender: userData.uuid,
+                                    ));
                                   });
+                                  ioSystem.sendMsg(msg: '${_textEditingController.text}', room: '${widget.room}');
                                   _textEditingController.clear();
                                 },
                               ),

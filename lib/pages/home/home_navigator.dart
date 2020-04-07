@@ -14,6 +14,13 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   int _currentIndex = 2;
   List<Widget> _items = [HomePage(), Text(''), ChatsPage(), Text('')];
   List<String> _titles = ['Home', 'Camera', 'Chats', 'Profile'];
+
+  @override
+  void initState() {
+  
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

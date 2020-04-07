@@ -1,5 +1,6 @@
 import 'package:chat_app/main.dart';
-import 'package:chat_app/providers/chat_list_provider.dart';
+import 'package:chat_app/providers/chat/chat_list_provider.dart';
+import 'package:chat_app/providers/chat/conversation_provider.dart';
 import 'package:chat_app/providers/shuffle_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class RegisterProviders extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ShuffleProvider()),
         ChangeNotifierProvider(create: (_) => ChatListProvider()),
+        ChangeNotifierProvider(create: (_) => ConversationProvider()),
       ],
       child: App(),
     );

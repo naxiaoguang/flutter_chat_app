@@ -1,4 +1,6 @@
-import 'package:chat_app/providers/chat_list_provider.dart';
+import 'package:chat_app/models/chat/conversation_model.dart';
+import 'package:chat_app/providers/chat/chat_list_provider.dart';
+import 'package:chat_app/utils/functions.dart';
 import 'package:chat_app/widgets/chat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,12 +15,13 @@ class _ChatsPageState extends State<ChatsPage> {
   ChatListProvider _chatListProvider;
 
   @override
-  void didChangeDependencies() {
-    if (_chatListProvider == null) {
-      _chatListProvider = Provider.of<ChatListProvider>(context);
+  void initState() {
+    // TODO: implement initState
+    Functions.nextTick(() async {
+      _chatListProvider = Provider.of<ChatListProvider>(context, listen: false);
       _chatListProvider.getChatList();
-    }
-    super.didChangeDependencies();
+    });
+    super.initState();
   }
 
   @override
@@ -34,7 +37,11 @@ class _ChatsPageState extends State<ChatsPage> {
                   return Text('hata');
                 } else {
                   if (provider.isLoading) {
-                    return CircularProgressIndicator();
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.green,
+                      ),
+                    );
                   } else {
                     if (provider?.res?.items != null && provider?.res?.items?.length != null && provider?.res?.items?.length != 0) {
                       return SingleChildScrollView(
@@ -45,9 +52,9 @@ class _ChatsPageState extends State<ChatsPage> {
                             children: <Widget>[
                               ChatItem(
                                 room: f.room,
-                                fullName: f.sender,
-                                profileImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSSAbhj4m_d_j0jLRgbJkWdGDFfQnUxRUDjU0Ht8kB-oZfhEV9H',
-                                isOnline: true,
+                                fullName: f.senderTitle,
+                                profileImg: f.profileImg,
+                                isOnline: f.isOnline == 1 ? true : false,
                               ),
                               SizedBox(
                                 height: 24,

@@ -35,8 +35,8 @@ class IOSystem {
     }
   }
 
-  void sendMsg({String msg, String receiver}) {
-    kSocket.emit('send_msg', {"to": receiver, "message": msg, "onCreate": '${DateTime.now()}'});
+  void sendMsg({String msg, String room}) {
+    kSocket.emit('send_msg', {"room": room, "message": msg, "onCreate": '${DateTime.now()}', 'sender': userData.uuid});
   }
 
   void disconnectSocket() async {

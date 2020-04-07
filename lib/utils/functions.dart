@@ -1,6 +1,13 @@
 import 'dart:convert';
 
 class Functions {
+  static void nextTick(Function callback, [int milliseconds = 0]) {
+    // FIXME:
+    Future.delayed(Duration(milliseconds: 10)).then((_) {
+      callback();
+    });
+  }
+
   static String _decodeBase64(String str) {
     String output = str.replaceAll('-', '+').replaceAll('_', '/');
 
@@ -39,5 +46,4 @@ class Functions {
       return {"Hata": "Token Data Boş"};
     }
   }
-
 }
