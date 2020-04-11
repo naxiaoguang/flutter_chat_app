@@ -2,9 +2,11 @@ import 'package:chat_app/main.dart';
 import 'package:chat_app/models/chat/conversation_model.dart';
 import 'package:chat_app/providers/chat/conversation_provider.dart';
 import 'package:chat_app/utils/functions.dart';
+import 'package:chat_app/utils/io_system.dart';
 import 'package:chat_app/widgets/chat_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class ConversationPage extends StatefulWidget {
   final String title;
@@ -20,8 +22,10 @@ class _ConversationPageState extends State<ConversationPage> {
   TextEditingController _textEditingController = TextEditingController();
   ConversationProvider _conversationProvider;
   List<Items> _messages = [];
+  IOSystem ioSys;
   @override
   void initState() {
+    ioSys = new IOSystem();
     Functions.nextTick(() async {
       _conversationProvider = Provider.of<ConversationProvider>(context, listen: false);
       await _conversationProvider.getChatDetail(widget.room);
@@ -30,8 +34,26 @@ class _ConversationPageState extends State<ConversationPage> {
         _messages = List.from(_messages.reversed);
       });
     });
+    print('qq');
+    ioSys.aa.listen((a){
+print('WW $a');
+    });
+    ioSys.str.listen((res) {
+      //print('aaaaa $res');
+      if (mounted) {
+        setState(() {
+          _messages.add(Items(createdAt: res['created_at'], message: res['message'], sender: res['sender']));
+        });
+      }
+    });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    print('aaa');
+    super.dispose();
   }
 
   @override
@@ -95,6 +117,12 @@ class _ConversationPageState extends State<ConversationPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            StreamBuilder(
+              stream: ioSys.aa,
+              builder: (context, stream){
+                return Text('$stream', style: TextStyle(color: Colors.white));
+              },
+            ),
             Expanded(child: Consumer<ConversationProvider>(builder: (context, provider, _) {
               if (provider.hasError) {
                 return Text('hata...');

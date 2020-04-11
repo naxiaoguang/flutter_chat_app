@@ -1,3 +1,4 @@
+import 'package:chat_app/main.dart';
 import 'package:chat_app/models/chat/conversation_model.dart';
 import 'package:chat_app/providers/chat/chat_list_provider.dart';
 import 'package:chat_app/utils/functions.dart';
@@ -52,9 +53,9 @@ class _ChatsPageState extends State<ChatsPage> {
                             children: <Widget>[
                               ChatItem(
                                 room: f.room,
-                                fullName: f.senderTitle,
-                                profileImg: f.profileImg,
-                                isOnline: f.isOnline == 1 ? true : false,
+                                fullName: userData.uuid == f.sender ? f.receiverTitle : f.senderTitle,
+                                profileImg: userData.uuid == f.sender ? f.receiverProfilePic : f.senderProfilePic,
+                                isOnline: userData.uuid == f.sender ? f.receiverStatus : f.senderStatus,
                               ),
                               SizedBox(
                                 height: 24,

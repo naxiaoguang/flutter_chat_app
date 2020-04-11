@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ChatItem extends StatelessWidget {
   final String fullName;
   final String profileImg;
-  final bool isOnline;
+  final int isOnline;
   final String room;
 
   const ChatItem({Key key, this.fullName, this.isOnline, this.profileImg, @required this.room}) : super(key: key);
@@ -22,7 +22,7 @@ class ChatItem extends StatelessWidget {
               builder: (context) => ConversationPage(
                 room: this.room,
                 title: this.fullName,
-                isOnline: this.isOnline,
+                isOnline: this.isOnline == 1 ? true : false,
               ),
             ),
           );
@@ -43,7 +43,12 @@ class ChatItem extends StatelessWidget {
                         child: this.profileImg != null || this.profileImg != ''
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(24),
-                                child: Image.network('$profileImg'),
+                                child: Image.network(
+                                  '$profileImg',
+                                  fit: BoxFit.cover,
+                                  height: 50,
+                                  width: 50,
+                                ),
                               )
                             : Icon(Icons.person),
                         backgroundColor: Colors.amber,
@@ -63,7 +68,7 @@ class ChatItem extends StatelessWidget {
                           width: 10,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: isOnline ? Colors.green : Colors.red,
+                            color: isOnline == 1 ? Colors.green : Colors.red,
                           ),
                         ),
                       ),

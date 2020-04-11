@@ -29,41 +29,53 @@ class ChatListModel {
 
 class Items {
   String room;
+  String createdAt;
   String sender;
   String receiver;
-  String createdAt;
   String senderTitle;
-  Null profileImg;
-  int isOnline;
+  String receiverTitle;
+  String senderProfilePic;
+  String receiverProfilePic;
+  int receiverStatus;
+  int senderStatus;
 
   Items(
       {this.room,
+      this.createdAt,
       this.sender,
       this.receiver,
-      this.createdAt,
       this.senderTitle,
-      this.profileImg,
-      this.isOnline});
+      this.receiverTitle,
+      this.senderProfilePic,
+      this.receiverProfilePic,
+      this.receiverStatus,
+      this.senderStatus});
 
   Items.fromJson(Map<String, dynamic> json) {
     room = json['room'];
+    createdAt = json['created_at'];
     sender = json['sender'];
     receiver = json['receiver'];
-    createdAt = json['created_at'];
     senderTitle = json['sender_title'];
-    profileImg = json['profile_img'];
-    isOnline = json['isOnline'];
+    receiverTitle = json['receiver_title'];
+    senderProfilePic = json['sender_profile_pic'];
+    receiverProfilePic = json['receiver_profile_pic'];
+    receiverStatus = json['receiver_status'];
+    senderStatus = json['sender_status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['room'] = this.room;
+    data['created_at'] = this.createdAt;
     data['sender'] = this.sender;
     data['receiver'] = this.receiver;
-    data['created_at'] = this.createdAt;
     data['sender_title'] = this.senderTitle;
-    data['profile_img'] = this.profileImg;
-    data['isOnline'] = this.isOnline;
+    data['receiver_title'] = this.receiverTitle;
+    data['sender_profile_pic'] = this.senderProfilePic;
+    data['receiver_profile_pic'] = this.receiverProfilePic;
+    data['receiver_status'] = this.receiverStatus;
+    data['sender_status'] = this.senderStatus;
     return data;
   }
 }
