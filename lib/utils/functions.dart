@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class Functions {
   static void nextTick(Function callback, [int milliseconds = 0]) {
     // FIXME:
@@ -44,6 +46,15 @@ class Functions {
       return payloadMap;
     } else {
       return {"Hata": "Token Data Boş"};
+    }
+  }
+
+  static parseDate(String date) {
+    try {
+      var d = DateTime.tryParse(date);
+      return DateFormat("d MMMM H:m").format(d);
+    } catch (e) {
+      print(e);
     }
   }
 }

@@ -15,7 +15,7 @@ class IOSystem {
 
   void init(String uuid) {
     if (kSocket == null) {
-      kSocket = IO.io('http://localhost:3060/', <String, dynamic>{
+      kSocket = IO.io('http://192.168.64.2:3060/', <String, dynamic>{
         'transports': ['websocket', 'polling'],
         'query': 'uuid=$uuid'
       });
@@ -47,7 +47,7 @@ class IOSystem {
   }
 
   void sendMsg({String msg, String room}) {
-    kSocket?.emit('send_msg', {"room": room, "message": msg, "onCreate": '${DateTime.now()}', 'sender': userData.uuid});
+  kSocket?.emit('send_msg', {"room": room, "message": msg, "onCreate": '${DateTime.now()}', 'sender': userData.uuid});
   }
 
   void disconnectSocket() async {

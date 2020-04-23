@@ -33,20 +33,11 @@ class _ConversationPageState extends State<ConversationPage> {
         _messages = List.from(_messages.reversed);
       });
     });
-    print('qq');
-
     super.initState();
   }
 
   @override
-  void dispose() {
-    print('aaa');
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var prov = Provider.of<ConversationProvider>(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(20, 20, 20, 1),
       appBar: PreferredSize(
@@ -84,7 +75,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       Text(
-                        widget.isOnline ? 'Çevrimiçi' : '${prov.messages.items.length}',
+                        widget.isOnline ? 'Çevrimiçi' : 'Çevrimdışı',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white70, fontSize: 12),
                       ),
@@ -96,7 +87,6 @@ class _ConversationPageState extends State<ConversationPage> {
                       color: Colors.white70,
                     ),
                     onPressed: () {
-            prov.addMessage = {"sender": 'qwd', "message": '111111', "created_at": 'sadsadad'};
                       
                     },
                   ),
@@ -111,11 +101,7 @@ class _ConversationPageState extends State<ConversationPage> {
           children: <Widget>[
             Expanded(
               child: Consumer<ConversationProvider>(builder: (context, provider, _) {
-
-
-             //     return Text('${provider.messages.items.length}', style: TextStyle(color: Colors.white,));
-
-
+                //     return Text('${provider.messages.items.length}', style: TextStyle(color: Colors.white,));
                 if (provider.hasError) {
                   return Text('hata...');
                 } else {
@@ -180,15 +166,15 @@ class _ConversationPageState extends State<ConversationPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  setState(() {
-                                    _messages.add(Items(
-                                      createdAt: '${DateTime.now()}',
-                                      message: '${_textEditingController.text}',
-                                      sender: userData.uuid,
-                                    ));
-                                  });
+                                  print(userData.uuid);
+                                  _conversationProvider.addMessage = {
+                                    "sender": "${userData.uuid}",
+                                    "message":"${_textEditingController.text}",
+                                    "created_at": "${DateTime.now()}"
+
+                                  };
                                   ioSystem.sendMsg(msg: '${_textEditingController.text}', room: '${widget.room}');
-                                  _textEditingController.clear();
+                                //  _textEditingController.clear();
                                 },
                               ),
                             ),

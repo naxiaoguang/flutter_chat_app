@@ -49,11 +49,7 @@ class ConversationProvider with ChangeNotifier {
 
   set addMessage(var data) {
     print(data);
-    _messages.items.add(Items(
-      createdAt: 'asd',
-      message: 'dasda231221313',
-      sender: '123424234234234'
-    ));
+    _messages.items.add(Items.fromJson(data));
     notifyListeners();
     _messages.items.forEach((f) {
       print(f.toJson());

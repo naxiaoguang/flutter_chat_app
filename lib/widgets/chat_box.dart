@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class ChatBox extends StatelessWidget {
@@ -5,8 +6,7 @@ class ChatBox extends StatelessWidget {
   final String message;
   final String time;
 
-  const ChatBox({Key key, this.align = AlignPos.LEFT, this.message, this.time})
-      : super(key: key);
+  const ChatBox({Key key, this.align = AlignPos.LEFT, this.message, this.time}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     if (align == AlignPos.LEFT) {
@@ -30,9 +30,9 @@ class ChatBox extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        '$time',
+                        '${Functions.parseDate(time)}',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
                           color: Colors.white70,
                         ),
                       ),
@@ -68,13 +68,13 @@ class ChatBox extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        '$time',
+                        '${Functions.parseDate(time)}',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
                           color: Colors.white70,
                         ),
                       ),

@@ -2,6 +2,7 @@ import 'package:chat_app/models/token_model.dart';
 import 'package:chat_app/pages/auth/splash_screen.dart';
 import 'package:chat_app/register_providers.dart';
 import 'package:chat_app/utils/constants.dart';
+import 'package:chat_app/utils/functions.dart';
 import 'package:chat_app/utils/io_system.dart';
 import 'package:chat_app/utils/storage_helper.dart';
 import 'package:dio/dio.dart';
