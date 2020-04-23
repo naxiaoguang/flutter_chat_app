@@ -1,20 +1,14 @@
 import 'dart:async';
 
 import 'package:chat_app/main.dart';
+import 'package:chat_app/providers/chat/conversation_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 IO.Socket kSocket;
 
 class IOSystem {
-  static StreamController _ctrl = new StreamController.broadcast();
-  PublishSubject aa = new PublishSubject();
-  Stream str = _ctrl.stream;
-
-  IOSystem() {
-    print('q333q');
-  }
-
   PublishSubject messageStream = PublishSubject(onListen: () {
     print('listen');
   });
@@ -28,7 +22,7 @@ class IOSystem {
     }
   }
 
-  void connectSocket() {
+  void connectSocket(context) {
     String uuid = storageHelper.getUUID();
     if (uuid != null) {
       kSocket?.disconnect();
@@ -40,12 +34,8 @@ class IOSystem {
 
           kSocket.on('receive_msg', (data) {
             print('MSG: $data');
-            aa.add(data);
-            if (!_ctrl.isClosed) {
-              messageStream.add(data);
-              messageStream.sink.add(data);
-              _ctrl.sink.add(data);
-            }
+            var a = Provider.of<ConversationProvider>(context, listen: false);
+            a.addMessage = {"sender": data['from'], "message": data['message'], "created_at": data['onCreate']};
           });
 
           kSocket.on('active_users', (data) {});

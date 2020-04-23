@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
         if (data['status'] == 1) {
           print('a');
           await storageHelper.setToken(data['token']);
-          ioSystem.connectSocket();
+          ioSystem.connectSocket(context);
           Navigator.push(
             context,
             MaterialPageRoute(

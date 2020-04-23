@@ -6,7 +6,6 @@ import 'package:chat_app/utils/io_system.dart';
 import 'package:chat_app/widgets/chat_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 
 class ConversationPage extends StatefulWidget {
   final String title;
@@ -29,23 +28,12 @@ class _ConversationPageState extends State<ConversationPage> {
     Functions.nextTick(() async {
       _conversationProvider = Provider.of<ConversationProvider>(context, listen: false);
       await _conversationProvider.getChatDetail(widget.room);
-      _messages = _conversationProvider?.res?.items ?? [];
+      _messages = _conversationProvider?.messages?.items ?? [];
       setState(() {
         _messages = List.from(_messages.reversed);
       });
     });
     print('qq');
-    ioSys.aa.listen((a){
-print('WW $a');
-    });
-    ioSys.str.listen((res) {
-      //print('aaaaa $res');
-      if (mounted) {
-        setState(() {
-          _messages.add(Items(createdAt: res['created_at'], message: res['message'], sender: res['sender']));
-        });
-      }
-    });
 
     super.initState();
   }
@@ -58,6 +46,7 @@ print('WW $a');
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<ConversationProvider>(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(20, 20, 20, 1),
       appBar: PreferredSize(
@@ -95,7 +84,7 @@ print('WW $a');
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       Text(
-                        widget.isOnline ? 'Çevrimiçi' : 'Çevrimdışı',
+                        widget.isOnline ? 'Çevrimiçi' : '${prov.messages.items.length}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white70, fontSize: 12),
                       ),
@@ -106,7 +95,10 @@ print('WW $a');
                       Icons.call,
                       color: Colors.white70,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+            prov.addMessage = {"sender": 'qwd', "message": '111111', "created_at": 'sadsadad'};
+                      
+                    },
                   ),
                 ],
               ),
@@ -117,38 +109,39 @@ print('WW $a');
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            StreamBuilder(
-              stream: ioSys.aa,
-              builder: (context, stream){
-                return Text('$stream', style: TextStyle(color: Colors.white));
-              },
-            ),
-            Expanded(child: Consumer<ConversationProvider>(builder: (context, provider, _) {
-              if (provider.hasError) {
-                return Text('hata...');
-              } else {
-                if (provider.isLoading) {
-                  return Center(child: CircularProgressIndicator());
+            Expanded(
+              child: Consumer<ConversationProvider>(builder: (context, provider, _) {
+
+
+             //     return Text('${provider.messages.items.length}', style: TextStyle(color: Colors.white,));
+
+
+                if (provider.hasError) {
+                  return Text('hata...');
                 } else {
-                  if (provider?.res?.items != null && provider?.res?.items?.length != null && provider?.res?.items?.length != 0) {
-                    return SingleChildScrollView(
-                      reverse: true,
-                      child: Column(
-                        children: _messages.map((f) {
-                          return ChatBox(
-                            align: '${f.sender}' == '${userData.uuid}' ? AlignPos.RIGHT : AlignPos.LEFT,
-                            message: f.message,
-                            time: f.createdAt,
-                          );
-                        }).toList(),
-                      ),
-                    );
+                  if (provider.isLoading) {
+                    return Center(child: CircularProgressIndicator());
                   } else {
-                    return Text('veri yok');
+                    if (provider?.messages?.items != null && provider?.messages?.items?.length != null && provider?.messages?.items?.length != 0) {
+                      return SingleChildScrollView(
+                        reverse: true,
+                        child: Column(
+                          children: provider.messages.items.map((f) {
+                            return ChatBox(
+                              align: '${f.sender}' == '${userData.uuid}' ? AlignPos.RIGHT : AlignPos.LEFT,
+                              message: f.message,
+                              time: f.createdAt,
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    } else {
+                      return Text('veri yok');
+                    }
                   }
                 }
-              }
-            })),
+              }),
+            ),
             SizedBox(
               height: 8,
             ),
